@@ -1,1 +1,0 @@
-můj první soubor na githubu dám ti na hubu.
