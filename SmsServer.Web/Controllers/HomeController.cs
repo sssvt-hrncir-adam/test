@@ -44,5 +44,10 @@ namespace SmsServer.Web.Controllers
         {
             return View();
         }
+
+        public IActionResult AddSms()
+        {
+            return View();
+        }
     }
 }
