@@ -4,12 +4,21 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using SmsServer.Data;
 using SmsServer.Web.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace SmsServer.Web.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly SmsDbContext _db;
+
+        public HomeController(SmsDbContext db)
+        {
+            _db = db;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -42,7 +51,16 @@ namespace SmsServer.Web.Controllers
 
         public IActionResult SmsList()
         {
-            return View();
+            var list = _db.SmsSet.Select(x => new SmsModel
+            {
+                Id = x.Id,
+                PhoneNumber = x.PhoneNumber,
+                CreatedAt = x.CreatedAt,
+                SentAt = x.SentAt,
+                Status = x.Status
+            }).ToList();
+            
+            return View(list);
         }
 
         public IActionResult AddSms()

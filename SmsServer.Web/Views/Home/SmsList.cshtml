@@ -1,4 +1,6 @@
-﻿<div style="margin-top:2rem">
+﻿@model List<SmsModel>
+
+<div style="margin-top:2rem">
     <table class="table">
         <thead>
             <tr>
@@ -10,27 +12,24 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>123456</td>
-                <td>Sent</td>
-                <td>22.4.2021</td>
-                <td>22.4.2021 18:36</td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>45578</td>
-                <td>Received</td>
-                <td>21.4.2021</td>
-                <td>21.4.2021 07:40</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>45528</td>
-                <td>ServerError</td>
-                <td>19.4.2021</td>
-                <td>19.4.2021 16:59</td>
-            </tr>
+            @foreach (var sms in Model)
+            {
+                var status = "";
+                switch(sms.Status)
+                {
+                    case 1:status = "New"; break;
+                    case 2: status = "Sent"; break;
+                    case 3: status = "Send Error"; break;
+                    case 4: status = "Server Error"; break;
+                }
+                <tr>
+                    <th scope="row">@(sms.Id)</th>
+                    <td>@(sms.PhoneNumber)</td>
+                    <td>@(status)</td>
+                    <td>@(sms.CreatedAt.ToString("d.M.yyyy HH:mm:ss"))</td>
+                    <td>@(sms.SentAt?.ToString("d.M.yyyy HH:mm:ss"))</td>
+                </tr>
+            }
         </tbody>
     </table>
 </div>

@@ -20,6 +20,7 @@ namespace SmsServer.Data.Models
     {
         public void Configure(EntityTypeBuilder<Status> builder)
         {
+            builder.ToTable("Status");
             builder.Property(b => b.Id).HasColumnType("int").IsRequired();
             builder.Property(b => b.Name).HasColumnType("varchar(50)").IsRequired().IsUnicode(false);
 
