@@ -38,20 +38,22 @@ else
         </div>
     </div>
 
-    //var status = "";
-    //switch (@Html.DisplayFor(m => m.Status))
-    //{
-    //    case 1: status = "New"; break;
-    //    case 2: status = "Sent"; break;
-    //    case 3: status = "Send Error"; break;
-    //    case 4: status = "Server Error"; break;
-    //}
+
+    string status = "";
+    switch (Model.Status)
+    {
+        case 1: status = "New"; break;
+        case 2: status = "Sent"; break;
+        case 3: status = "Send Error"; break;
+        case 4: status = "Server Error"; break;
+    }
+
     <div class="row">
         <div class="col-md-2">
             @Html.DisplayNameFor(m => m.Status)
         </div>
         <div class="col-md-10">
-            @Html.DisplayFor(m => m.Status)
+            @(status)
         </div>
     </div>
 

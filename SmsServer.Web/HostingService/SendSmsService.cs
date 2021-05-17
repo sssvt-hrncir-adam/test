@@ -45,25 +45,33 @@ namespace SmsServer.Web.HostingService
                         {
                             sms.Status = 2;
                             sms.SentAt = DateTime.Now;
+
+                            string status = "";
+                            switch (sms.Status)
+                            {
+                                case 1: status = "New"; break;
+                                case 2: status = "Sent"; break;
+                                case 3: status = "Send Error"; break;
+                                case 4: status = "Server Error"; break;
+                            }
+                            
                             using (StreamWriter sw = File.AppendText(@"C:\Sms\SmsList.txt"))
                             {
                                 sw.WriteLine(sms.Id);
                                 sw.WriteLine(sms.PhoneNumber);
                                 sw.WriteLine(sms.Text);
-                                sw.WriteLine(sms.Status);
+                                sw.WriteLine(status);
                                 sw.WriteLine(sms.CreatedAt);
                                 sw.WriteLine(sms.SentAt);
                                 sw.WriteLine("---------------------------------------");
                             }
+                            await this._db.SaveChangesAsync();
                         }
                         catch(Exception ex)
                         {
                             this._logger.LogError(ex, "Error while sending new SMS.");
                         }
-                        // mark SMS as sent
-                        //sms.SentAt = TODO
-                        //sms.Status = TODO
-                        await this._db.SaveChangesAsync();
+                        
                     }
                 }
                 catch(Exception ex)
