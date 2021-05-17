@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using SmsServer.Data;
 using SmsServer.Web.Models;
 using Microsoft.EntityFrameworkCore;
+using AspNetCoreCURDMVC_Demo.Models;
 
 namespace SmsServer.Web.Controllers
 {
@@ -17,6 +18,31 @@ namespace SmsServer.Web.Controllers
         public HomeController(SmsDbContext db)
         {
             _db = db;
+        }
+
+        SmsDBAccessLayer empdb = new SmsDBAccessLayer();
+
+        [HttpGet]
+        public IActionResult AddSms()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult AddSms([Bind] NewSmsModel newSmsModel)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    string resp = empdb.AddNewSms(newSmsModel);
+                    TempData["msg"] = resp;
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["msg"] = ex.Message;
+            }
+            return View();
         }
 
         public IActionResult Index()
@@ -61,11 +87,6 @@ namespace SmsServer.Web.Controllers
             }).ToList();
             
             return View(list);
-        }
-
-        public IActionResult AddSms()
-        {
-            return View();
         }
     }
 }

@@ -13,3 +13,19 @@
 GO
 
 CREATE INDEX [IX_Sms_Status] ON [dbo].[Sms] ([Status])
+
+GO
+
+
+    create procedure sp_Add_Sms  
+    @PhoneNumber varchar(15),  
+     @Text nvarchar(MAX),  
+     @Status int,  
+     @CreatedAt DATETIME2(4),  
+     @SentAt DATETIME2(4),
+     @StatusText varchar(MAX)
+     AS  
+     BEGIN  
+     Insert into Sms(PhoneNumber, Text, Status, CreatedAt, SentAt)  
+     values(@PhoneNumber, @Text, 'Sent', GETDATE(), GETDATE())  
+     END  

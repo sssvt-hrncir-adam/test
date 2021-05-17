@@ -1,22 +1,35 @@
 ﻿
+@model SmsServer.Web.Models.NewSmsModel
 @{
-    ViewData["Title"] = "AddSms";
+    ViewData["Title"] = "New SMS";
 }
-
-
-
-<form action="/action_page.php">
-    
-    <p style="font-family:Verdana;font-size:190%;text-align:left;margin-top:4rem">Send SMS</p>
+<h2>New SMS</h2>
+<hr />
+<form asp-action="AddSms" class="form-horizontal">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
-        <label for="PhoneNumber">Phone Number:</label>
-        <input type="tel" class="form-control" name="tel">
+        <label class="control-label">Phone Number:</label>
+        <input asp-for="PhoneNumber" class="form-control" />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label for="text">Text:</label>
-        <input type="text" class="form-control" text="Text">
+        <label class="control-label">Text:</label>
+        <input asp-for="Text" class="form-control" />
+        <span asp-validation-for="Text" class="text-danger"></span>
     </div>
 
-    <button type="submit" class="btn btn-default">Send</button>
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn bg-primary" />
+
+    </div>
 </form>
+@{
+    if (@TempData["Msg"] != null)
+    {
+        <script>
 
+                alert('@TempData["msg"]')
+        </script>
+
+    }
+}
