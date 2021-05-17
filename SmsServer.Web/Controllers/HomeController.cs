@@ -8,42 +8,24 @@ using SmsServer.Data;
 using SmsServer.Web.Models;
 using Microsoft.EntityFrameworkCore;
 using AspNetCoreCURDMVC_Demo.Models;
+using Microsoft.Extensions.Logging;
+using SmsServer.Data.Enums;
+using SmsServer.Data.Models;
 
 namespace SmsServer.Web.Controllers
 {
     public class HomeController : Controller
     {
         private readonly SmsDbContext _db;
+        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(SmsDbContext db)
+        public HomeController(SmsDbContext db, ILogger<HomeController> logger)
         {
             _db = db;
+            _logger = logger;
         }
 
-        SmsDBAccessLayer empdb = new SmsDBAccessLayer();
-
-        [HttpGet]
-        public IActionResult AddSms()
-        {
-            return View();
-        }
-        [HttpPost]
-        public IActionResult AddSms([Bind] NewSmsModel newSmsModel)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    string resp = empdb.AddNewSms(newSmsModel);
-                    TempData["msg"] = resp;
-                }
-            }
-            catch (Exception ex)
-            {
-                TempData["msg"] = ex.Message;
-            }
-            return View();
-        }
+        //SmsDBAccessLayer empdb = new SmsDBAccessLayer();
 
         public IActionResult Index()
         {
@@ -87,6 +69,52 @@ namespace SmsServer.Web.Controllers
             }).ToList();
             
             return View(list);
+        }
+
+        [HttpGet]
+        public IActionResult AddSms()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddSms(NewSmsModel model)
+        {
+            try
+            {
+                //if (ModelState.IsValid)
+                //{
+                //    string resp = empdb.AddNewSms(model);
+                //    TempData["msg"] = resp;
+                //}
+
+                if (!ModelState.IsValid)
+                {
+                    return View(model);
+                }
+
+                var smsModel = new Sms
+                {
+                    PhoneNumber = model.PhoneNumber,
+                    Text = model.Text,
+                    Status = (int)SmsStatusEnum.New,
+                    CreatedAt = DateTime.UtcNow
+                };
+                await this._db.SmsSet.AddAsync(smsModel);
+                await this._db.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, "Cannot save new sms.");
+                TempData["msg"] = "Cannot save new sms";
+            }
+            return RedirectToAction(nameof(SmsList));
+        }
+
+        [HttpGet]
+        public IActionResult SmsDetails(int id)
+        {
+            return View();
         }
     }
 }

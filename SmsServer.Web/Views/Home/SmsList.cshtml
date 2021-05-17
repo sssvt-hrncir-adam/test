@@ -22,13 +22,13 @@
                     case 3: status = "Send Error"; break;
                     case 4: status = "Server Error"; break;
                 }
-<tr>
-    <th scope="row">@(sms.Id)</th>
-    <td>@(sms.PhoneNumber)</td>
-    <td>@(status)</td>
-    <td>@(sms.CreatedAt.ToString("d.M.yyyy HH:mm:ss"))</td>
-    <td>@(sms.SentAt?.ToString("d.M.yyyy HH:mm:ss"))</td>
-</tr>            }
+                <tr>
+                    <th scope="row">@(sms.Id)</th>
+                    <td>@(sms.PhoneNumber)</td>
+                    <td>@(status)</td>
+                    <td>@(sms.CreatedAt.ToString("d.M.yyyy HH:mm:ss"))</td>
+                    <td>@(sms.SentAt?.ToString("d.M.yyyy HH:mm:ss"))</td>
+                </tr>            }
         </tbody>
     </table>
 </div>
