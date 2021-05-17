@@ -1,7 +1,69 @@
-﻿
+﻿@model SmsDetailsModel
 @{
     ViewData["Title"] = "SmsDetails";
 }
 
-<h2>SmsDetails</h2>
+<h2>Sms Details</h2>
+<a asp-action="SmsList" class="btn btn-primary" style="margin-bottom:2rem">Return</a>
+@if (Model == null)
+{
+    <span class="text-danger">Cannot show sms details</span>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-2">
+            @Html.DisplayNameFor(m => m.Id)
+        </div>
+        <div class="col-md-10">
+            @Html.DisplayFor(m => m.Id)
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            @Html.DisplayNameFor(m => m.PhoneNumber)
+        </div>
+        <div class="col-md-10">
+            @Html.DisplayFor(m => m.PhoneNumber)
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            @Html.DisplayNameFor(m => m.Text)
+        </div>
+        <div class="col-md-10">
+            @Html.DisplayFor(m => m.Text)
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            @Html.DisplayNameFor(m => m.Status)
+        </div>
+        <div class="col-md-10">
+            @Html.DisplayFor(m => m.Status)
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            @Html.DisplayNameFor(m => m.CreatedAt)
+        </div>
+        <div class="col-md-10">
+            @Html.DisplayFor(m => m.CreatedAt)
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            @Html.DisplayNameFor(m => m.SentAt)
+        </div>
+        <div class="col-md-10">
+            @Html.DisplayFor(m => m.SentAt)
+        </div>
+    </div>
+}
+
 

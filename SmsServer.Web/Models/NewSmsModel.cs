@@ -9,10 +9,12 @@ namespace SmsServer.Web.Models
 {
     public class NewSmsModel
     {
-        [Description("Phone number")]
+        [Display(Name = "Phone number")]
+        [Required]
         public string PhoneNumber { get; set; }
 
-        [Description("Text")]
+        [Display(Name = "Text")]
+        [Required]
         public string Text { get; set; }        
     }
 }

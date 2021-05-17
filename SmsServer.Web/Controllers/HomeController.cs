@@ -114,6 +114,24 @@ namespace SmsServer.Web.Controllers
         [HttpGet]
         public IActionResult SmsDetails(int id)
         {
+            try
+            {
+                var sms = _db.SmsSet.Find(id);
+                var smsDetailsModel = new SmsDetailsModel
+                {
+                    Id = sms.Id,
+                    PhoneNumber = sms.PhoneNumber,
+                    Text = sms.Text,
+                    Status = sms.Status,
+                    CreatedAt = sms.CreatedAt,
+                    SentAt = sms.SentAt
+                };
+                return View(smsDetailsModel);
+            }
+            catch(Exception ex)
+            {
+                this._logger.LogError(ex, "Cannot get sms details.");
+            }
             return View();
         }
     }

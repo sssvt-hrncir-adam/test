@@ -9,6 +9,7 @@
                 <th scope="col">Status</th>
                 <th scope="col">Created At</th>
                 <th scope="col">Sent At</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
@@ -22,13 +23,15 @@
                     case 3: status = "Send Error"; break;
                     case 4: status = "Server Error"; break;
                 }
-                <tr>
-                    <th scope="row">@(sms.Id)</th>
-                    <td>@(sms.PhoneNumber)</td>
-                    <td>@(status)</td>
-                    <td>@(sms.CreatedAt.ToString("d.M.yyyy HH:mm:ss"))</td>
-                    <td>@(sms.SentAt?.ToString("d.M.yyyy HH:mm:ss"))</td>
-                </tr>            }
+            <tr>
+                <th scope="row">@(sms.Id)</th>
+                <td>@(sms.PhoneNumber)</td>
+                <td>@(status)</td>
+                <td>@(sms.CreatedAt.ToString("d.M.yyyy HH:mm:ss"))</td>
+                <td>@(sms.SentAt?.ToString("d.M.yyyy HH:mm:ss"))</td>
+                <td><a asp-action="SmsDetails" asp-route-id="@(sms.Id)">Detail</a></td>
+            </tr>
+            }
         </tbody>
     </table>
 </div>
