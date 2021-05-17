@@ -7,6 +7,9 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Hosting;
+using System.Threading;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace SmsServer.Web
 {
@@ -22,3 +25,4 @@ namespace SmsServer.Web
                 .UseStartup<Startup>();
     }
 }
+

@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SmsServer.Data;
+using SmsServer.Web.HostingService;
 
 namespace SmsServer.Web
 {
@@ -31,7 +32,7 @@ namespace SmsServer.Web
             services.AddDbContext<SmsDbContext>(options =>
             {
                 options.UseSqlServer(connectionString);
-            });
+            }, ServiceLifetime.Transient, ServiceLifetime.Transient);
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -39,9 +40,10 @@ namespace SmsServer.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddHostedService<SendSmsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
