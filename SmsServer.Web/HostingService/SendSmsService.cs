@@ -44,7 +44,7 @@ namespace SmsServer.Web.HostingService
                         try
                         {
                             sms.Status = 2;
-                            sms.SentAt = DateTime.Now;
+                            sms.SentAt = DateTime.UtcNow;
 
                             string status = "";
                             switch (sms.Status)
